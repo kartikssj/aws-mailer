@@ -29,6 +29,10 @@ public class AWSMailer {
 			option_f.setRequired(true);
 			options.addOption(option_f);
 
+			Option option_F = new Option("F", "from-name", true, "From name");
+			option_F.setRequired(false);
+			options.addOption(option_F);
+
 			Option option_s = new Option("s", "subject", true, "Mail subject");
 			option_s.setRequired(true);
 			options.addOption(option_s);
@@ -41,10 +45,6 @@ public class AWSMailer {
 			option_r.setRequired(true);
 			options.addOption(option_r);
 
-			Option option_i = new Option("i", "interval", true, "Interval between two mails in case -T is provided");
-			option_i.setRequired(true);
-			options.addOption(option_i);
-
 			Option option_t = new Option("t", "to", true, "To address");
 			option_t.setRequired(false);
 			options.addOption(option_t);
@@ -52,6 +52,10 @@ public class AWSMailer {
 			Option option_T = new Option("T", "to-list", true, "To address list file location");
 			option_T.setRequired(false);
 			options.addOption(option_T);
+
+			Option option_i = new Option("i", "interval", true, "Interval between two mails in case -T is provided");
+			option_i.setRequired(false);
+			options.addOption(option_i);
 
 			// parse
 			CommandLineParser parser = new BasicParser();
@@ -82,10 +86,10 @@ public class AWSMailer {
 			// read from, subject
 			Mail mail = null;
 			try {
-				String from = cmd.getOptionValue("f");
+				String from = Utils.getEncodedEmail(cmd.getOptionValue("f"),cmd.getOptionValue("F"));
 				String subject = cmd.getOptionValue("s");
 				mail = Mail.builder().from(from).subject(subject).body(body).build();
-			} catch (IllegalArgumentException e) {
+			} catch (Exception e) {
 				usage(e.getMessage(), options);
 			}
 

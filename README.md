@@ -12,15 +12,16 @@ To build, you need maven2 and java >= 1.7.
 	 
 Once built, the binaries will be present inside the target directory.
 
-	usage: java -jar aws-mailer.jar -b <arg> -f <arg> -i <arg> -r <arg> -s
-		   <arg> [-t <arg>] [-T <arg>]
+	usage: java -jar aws-mailer.jar -b <arg> -f <arg> [-F <arg>] [-i <arg>] -r
+		   <arg> -s <arg> [-t <arg>] [-T <arg>]
 	Utility to send bulk mails using Amazon AWS SES
-	 -b,--body <arg>       Mail body content file location
-	 -f,--from <arg>       From address
-	 -i,--interval <arg>   Interval between two mails in case -T is provided
-	 -r,--region <arg>     Region of AWS to use
-	 -s,--subject <arg>    Mail subject
-	 -t,--to <arg>         To address
-	 -T,--to-list <arg>    To address list file location
+	 -b,--body <arg>        Mail body content file location
+	 -f,--from <arg>        From address
+	 -F,--from-name <arg>   From name
+	 -i,--interval <arg>    Interval between two mails in case -T is provided
+	 -r,--region <arg>      Region of AWS to use
+	 -s,--subject <arg>     Mail subject
+	 -t,--to <arg>          To address
+	 -T,--to-list <arg>     To address list file location
 	 
 For any support & feedback, please mail me at kartikssj@gmail.com.

@@ -26,6 +26,10 @@ public class Sender {
 	public void send(String to, Mail mail) {
 
 		// Construct an object to contain the recipient address.
+		if (!Utils.isValidEmail(to)) {
+			logger.error("INVALID_EMAIL to=" + to + " from=" + mail.getFrom() + " subject=" + mail.getSubject());
+			return;
+		}
 		Destination destination = new Destination().withToAddresses(new String[]{to});
 
 		// Create the subject and body of the message.
@@ -46,7 +50,7 @@ public class Sender {
 			client.sendEmail(request);
 			logger.debug("SEND_SUCCESS to=" + to + " from=" + mail.getFrom() + " subject=" + mail.getSubject());
 		} catch (Exception ex) {
-			logger.error("SEND_FAILED to=" + to + " from=" + mail.getFrom() + " subject=" + mail.getSubject());
+			logger.error("SEND_FAILED to=" + to + " from=" + mail.getFrom() + " subject=" + mail.getSubject() + " error=" + ex.getMessage());
 		}
 
 	}
