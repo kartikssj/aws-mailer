@@ -1,0 +1,23 @@
+
+# Windows image file caches
+Thumbs.db
+
+# Folder com.flipkart.aemon.config file
+Desktop.ini
+
+# Mac crap
+.DS_Store
+
+# build stuff
+*.class
+target
+
+# idea
+*.iml
+*.ipr
+*.iws
+.idea
+
+# test configs
+myapp.yaml
+
