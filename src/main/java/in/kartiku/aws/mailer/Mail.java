@@ -69,4 +69,11 @@ public class Mail {
 		return body;
 	}
 
+	@Override
+	public String toString() {
+		return "Mail{" +
+				"from='" + from + '\'' +
+				", subject='" + subject + '\'' +
+				'}';
+	}
 }

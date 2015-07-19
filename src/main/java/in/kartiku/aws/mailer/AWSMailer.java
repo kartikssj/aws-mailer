@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
+ * CLI handler for AWS mailer.
  * @author kartikbu
  * @since 01/01/15
  */
@@ -57,6 +58,10 @@ public class AWSMailer {
 			option_i.setRequired(false);
 			options.addOption(option_i);
 
+			Option option_c = new Option("c", "concurrency", true, "Concurrency of sending mails");
+			option_c.setRequired(false);
+			options.addOption(option_c);
+
 			// parse
 			CommandLineParser parser = new BasicParser();
 			cmd = parser.parse(options, args);
@@ -89,6 +94,7 @@ public class AWSMailer {
 				String from = Utils.getEncodedEmail(cmd.getOptionValue("f"),cmd.getOptionValue("F"));
 				String subject = cmd.getOptionValue("s");
 				mail = Mail.builder().from(from).subject(subject).body(body).build();
+				logger.debug(String.format("MAIL %s", mail.toString()));
 			} catch (Exception e) {
 				usage(e.getMessage(), options);
 			}
@@ -96,6 +102,11 @@ public class AWSMailer {
 			// read region
 			Region region = Region.getRegion(Regions.valueOf(cmd.getOptionValue("r")));
 
+			// get concurrency
+			int concurrency = 1;
+			if (cmd.getOptionValue('c') != null) {
+				concurrency = Integer.parseInt(cmd.getOptionValue('c'));
+			}
 
 			// send using appropriate method
 			Sender sender = new Sender(region);
@@ -104,7 +115,7 @@ public class AWSMailer {
 
 					// get file
 					File toFile = new File(toFileLocation);
-					if (!toFile.exists()) {
+					if (!toFile.exists() || toFile.isDirectory()) {
 						usage("To address list file not found: " + toFileLocation, options);
 					}
 
@@ -117,10 +128,9 @@ public class AWSMailer {
 					}
 
 					// start sending bulk
-					sender.sendBulk(toFile, mail, interval);
+					sender.sendBulk(toFile, mail, interval, concurrency);
 
 				} else {
-
 					// send single email
 					sender.send(to, mail);
 				}

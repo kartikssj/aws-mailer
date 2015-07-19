@@ -16,6 +16,7 @@ Once built, the binaries will be present inside the target directory.
 		   <arg> -s <arg> [-t <arg>] [-T <arg>]
 	Utility to send bulk mails using Amazon AWS SES
 	 -b,--body <arg>        Mail body content file location
+	 -c,--concurrency <arg>	Concurrency of sending mails
 	 -f,--from <arg>        From address
 	 -F,--from-name <arg>   From name
 	 -i,--interval <arg>    Interval between two mails in case -T is provided
@@ -25,3 +26,4 @@ Once built, the binaries will be present inside the target directory.
 	 -T,--to-list <arg>     To address list file location
 	 
 For any support & feedback, please mail me at kartikssj@gmail.com.
+
